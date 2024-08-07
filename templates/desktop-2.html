@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/desktop-2.css') }}">
+    
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Petrona:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;500&display=swap"
+    />
+  </head>
+  <body>
+    <div class="desktop-2">
+      <div class="desktop-2-child"></div>
+      <img
+        class="desktop-2-item"
+        loading="lazy"
+        alt=""
+        src="{{ url_for('static', filename='public/ellipse-1.svg') }}"
+      />
+
+      <header class="desktop-2-inner"></header>
+      <section class="main-f-r-a-m-e">
+        <div class="inner-f-r-a-m-e">
+          <div class="inner-f-r-a-m-e-inner">
+            <div class="vector-container">
+              <img class="frame-child1" alt="" src="{{ url_for('static', filename='public/ellipse-6.svg') }}" />
+
+              <div class="content-parent">
+                <div class="content"></div>
+                <h3 class="spiritoasis1">
+                  <b>Spirit</b>
+                  <span class="oasis1">Oasis</span>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="camera-view">Correct Pose</div>
+        </div>
+        <div class="frame-parent1">
+          <div class="frame-wrapper1">
+            <div class="pricing-schedule-parent">
+              <div class="pricing-schedule">
+                <div class="pricing1">Pricing</div>
+              </div>
+              <div class="pricing-schedule1">
+                <div class="schedule1">Schedule</div>
+              </div>
+              <div class="frame-parent2">
+                <div class="about-instructor-wrapper">
+                  <div class="about-instructor1">About instructor</div>
+                </div>
+                <div class="vector-parent1">
+                  <img
+                    class="frame-child2"
+                    alt=""
+                    src="{{ url_for('static', filename='public/ellipse-7.svg') }}"
+                  />
+
+                  <button class="rectangle-container">
+                    <div class="rectangle-div"></div>
+                    <b class="free-trail1">Free Trail</b>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="correct-pose">Camera View:</div>
+        </div>
+      </section>
+      <section class="frame-section">
+        <div class="frame-child3"></div>
+        <img id="webcam-video" src="{{ url_for('video_feed') }}" alt="Webcam Feed">
+        <div class="frame-child4"></div>
+        <div class="frame-child5"></div>
+      </section>
+      <footer class="main-comments">
+        <div class="main-comments-child"></div>
+        <div class="comments-parent">
+          <div class="comments">Comments :</div>
+          <div class="frame-child6"></div>
+        </div>
+        <div class="main-comments-item"></div>
+      </footer>
+    </div>
+  </body>
+</html>

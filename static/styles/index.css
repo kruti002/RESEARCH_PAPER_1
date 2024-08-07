@@ -1,0 +1,648 @@
+.desktop-1-child {
+  height: 1024px;
+  width: 1440px;
+  position: relative;
+  background: linear-gradient(180deg, #fbeadd, #fff);
+  display: none;
+  max-width: 100%;
+  z-index: 0;
+}
+.frame-child,
+.woman-doing-yoga-2 {
+  position: absolute;
+  margin: 0 !important;
+  z-index: 1;
+}
+.woman-doing-yoga-2 {
+  height: 725px;
+  width: 1098px;
+  bottom: 88px;
+  left: -280px;
+  object-fit: cover;
+}
+.frame-child {
+  height: 43px;
+  width: 180px;
+  top: -4px;
+  left: -13px;
+  border-radius: var(--br-xl);
+  background-color: var(--color-aliceblue);
+}
+.oasis {
+  font-weight: 300;
+  color: var(--color-tan-100);
+}
+.spiritoasis {
+  margin: 0;
+  height: 60px;
+  flex: 1;
+  position: relative;
+  font-size: inherit;
+  display: inline-block;
+  text-shadow: 1px 0 0 silver, 0 1px 0 silver, -1px 0 0 silver, 0-1px 0 silver;
+  z-index: 2;
+  font-family: inherit;
+}
+.desktop-1-inner,
+.rectangle-parent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.rectangle-parent {
+  align-self: stretch;
+  flex-direction: row;
+  position: relative;
+}
+.desktop-1-inner {
+  width: 200px;
+  flex-direction: column;
+  padding: 30px 0 0;
+  box-sizing: border-box;
+}
+.desktop-1-item {
+  height: 87px;
+  width: 1440px;
+  position: relative;
+  background-color: var(--color-tan-200);
+  display: none;
+  max-width: 100%;
+  z-index: 3;
+}
+.frame-item,
+.pricing {
+  position: relative;
+  z-index: 1;
+}
+.frame-item {
+  height: 280px;
+  width: 280px;
+}
+.pricing {
+  align-self: stretch;
+}
+.control-body-free-soul-label,
+.vector-parent {
+  width: 89px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 107px 0 0;
+  box-sizing: border-box;
+}
+.vector-parent {
+  width: 490px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 0 63px;
+  gap: var(--gap-xl);
+  max-width: 100%;
+}
+.inhale-the-future {
+  margin-block-start: 0;
+  margin-block-end: 15px;
+}
+.inhale-the-future-container {
+  margin: 0;
+  align-self: stretch;
+  height: 180px;
+  position: relative;
+  font-size: inherit;
+  line-height: 55px;
+  font-weight: 400;
+  font-family: inherit;
+  display: inline-block;
+  z-index: 2;
+}
+.control-your-body {
+  width: 352px;
+  position: relative;
+  font-size: 30px;
+  font-weight: 100;
+  font-family: var(--font-roboto);
+  color: #4a1a11;
+  display: inline-block;
+  max-width: 100%;
+  z-index: 2;
+  margin: -39px 0 0;
+}
+.inhale-the-future-exhale-the-parent {
+  width: 445px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+.schedule-label-inner {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
+  max-width: 100%;
+  font-size: 55px;
+  font-family: var(--font-petrona);
+}
+.email-address-label-child {
+  height: 58px;
+  width: 273px;
+  position: relative;
+  border-radius: var(--br-21xl);
+  background-color: var(--color-dimgray);
+  display: none;
+}
+.start-your-journey {
+  position: relative;
+  font-size: var(--font-size-5xl);
+  letter-spacing: -0.05em;
+  font-weight: 500;
+  font-family: var(--font-poppins);
+  color: var(--color-linen);
+  text-align: left;
+  z-index: 3;
+}
+.email-address-label {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-2xs) var(--padding-sm) var(--padding-2xs) 19px;
+  background-color: var(--color-dimgray);
+  border-radius: var(--br-21xl);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  white-space: nowrap;
+  z-index: 2;
+}
+.email-address-label:hover,
+.rectangle-group:hover {
+  background-color: var(--color-gray-100);
+}
+.contact-me-label,
+.schedule-label {
+  display: flex;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.contact-me-label {
+  width: 475px;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0 var(--padding-xl);
+  box-sizing: border-box;
+}
+.schedule-label {
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 52px;
+  min-width: 364px;
+}
+.schedule {
+  position: relative;
+  font-weight: 300;
+  display: inline-block;
+  min-width: 102px;
+  z-index: 1;
+}
+.spiritoasis-email-address {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-2xs) var(--padding-2xs) 0 0;
+}
+.about-instructor {
+  position: relative;
+  font-weight: 300;
+  z-index: 1;
+}
+.about-instructor-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-3xs) 0 0;
+}
+.facebook-name-label-child {
+  height: 240px;
+  width: 240px;
+  position: absolute;
+  margin: 0 !important;
+  top: -124px;
+  right: -73px;
+  z-index: 1;
+}
+.frame-inner {
+  height: 50px;
+  width: 140px;
+  position: relative;
+  border-radius: var(--br-21xl);
+  background-color: var(--color-dimgray);
+  border: 1px solid var(--color-darkslategray);
+  box-sizing: border-box;
+  display: none;
+}
+.free-trail {
+  position: relative;
+  font-size: var(--font-size-4xl);
+  display: inline-block;
+  font-family: var(--font-poppins);
+  color: var(--color-linen);
+  text-align: left;
+  min-width: 109px;
+  z-index: 3;
+}
+.rectangle-group {
+  cursor: pointer;
+  border: 1px solid var(--color-darkslategray);
+  padding: var(--padding-6xs) var(--padding-2xs) var(--padding-5xs)
+    var(--padding-lg);
+  background-color: var(--color-dimgray);
+  border-radius: var(--br-21xl);
+  white-space: nowrap;
+  z-index: 2;
+}
+.rectangle-group:hover {
+  border: 1px solid var(--color-gray-200);
+  box-sizing: border-box;
+}
+.facebook-name-label,
+.rectangle-group,
+.spiritoasis-email-address-parent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.facebook-name-label {
+  position: relative;
+}
+.spiritoasis-email-address-parent {
+  gap: var(--gap-17xl);
+}
+.icon,
+.icon1,
+.icon2 {
+  position: absolute;
+  top: 0;
+  left: 178px;
+  border-radius: var(--br-xl);
+  width: 180px;
+  height: 220px;
+  object-fit: cover;
+  z-index: 1;
+}
+.icon1,
+.icon2 {
+  top: 203px;
+  left: 165px;
+  width: 152.7px;
+  height: 229px;
+  z-index: 2;
+}
+.icon2 {
+  top: 98px;
+  left: 0;
+  width: 180px;
+  height: 220px;
+  z-index: 3;
+}
+.parent {
+  height: 432px;
+  flex: 1;
+  position: relative;
+  max-width: 100%;
+}
+.contact-label-inner {
+  width: 434px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 38px;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.contact-label,
+.platform-instagram-shape {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.contact-label {
+  justify-content: flex-start;
+  gap: 105px;
+}
+.platform-instagram-shape {
+  justify-content: flex-end;
+  padding: 0 0 33px;
+  box-sizing: border-box;
+  min-width: 500px;
+  margin-left: -26px;
+}
+.frame-wrapper,
+.schedule-label-parent {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-shrink: 0;
+}
+.schedule-label-parent {
+  width: 1054px;
+  align-items: flex-end;
+  padding: 0 var(--padding-xl) 0 0;
+  box-sizing: border-box;
+  
+}
+.frame-wrapper {
+  margin-top: -727px;
+  align-self: stretch;
+  align-items: flex-start;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--font-size-3xl);
+  color: var(--color-dimgray);
+  font-family: var(--font-poppins);
+}
+.ellipse-icon {
+  width: 580px;
+  height: 580px;
+  position: absolute;
+  margin: 0 !important;
+  right: -167px;
+  bottom: -210px;
+  z-index: 1;
+}
+.platforminstagram-shapeorig-icon {
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  margin: 0 !important;
+  bottom: 77px;
+  left: 147px;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 2;
+}
+.contact-me,
+.spiritoasisgmailcom {
+  position: relative;
+  font-weight: 500;
+  z-index: 2;
+}
+.contact-me {
+  margin: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+.spiritoasisgmailcom {
+  line-height: 0%;
+  white-space: nowrap;
+}
+.platformfacebook-shapeorigi-icon {
+  height: 42px;
+  width: 42px;
+  position: relative;
+  object-fit: cover;
+  z-index: 3;
+}
+.facebook {
+  height: 24px;
+  position: relative;
+  line-height: 0%;
+  display: inline-block;
+  flex-shrink: 0;
+  min-width: 98px;
+  z-index: 2;
+}
+.facebook-wrapper,
+.platformfacebook-shapeorigi-parent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.facebook-wrapper {
+  flex-direction: column;
+  padding: var(--padding-xl) 0 0;
+}
+.platformfacebook-shapeorigi-parent {
+  align-self: stretch;
+  flex-direction: row;
+  gap: var(--gap-8xs);
+}
+.frame-container,
+.spiritoasisgmailcom-parent {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.frame-container {
+  flex-direction: row;
+  padding: 20px 4px;
+}
+.spiritoasisgmailcom-parent {
+  flex-direction: column;
+  gap: 2px;
+}
+.platformwhatsapp-shapeorigi-icon {
+  width: 42px;
+  height: 42px;
+  position: relative;
+  z-index: 3;
+}
+.platformwhatsapp-shapeorigi-wrapper {
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0 0 var(--padding-11xs);
+  box-sizing: border-box;
+}
+.instagram {
+  flex: 1;
+  position: relative;
+  line-height: 0%;
+  z-index: 2;
+  padding: 0 50px;
+}
+.facebook-icon {
+  width: 165px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 var(--padding-11xs);
+  box-sizing: border-box;
+}
+.whatsapp {
+  align-self: stretch;
+  position: relative;
+  line-height: 0%;
+  z-index: 2;
+  padding: 23px 7px;
+}
+.whats-app-button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 17px;
+}
+.frame-div,
+.frame-group {
+  align-self: stretch;
+  display: flex;
+  justify-content: flex-start;
+}
+.frame-div {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--gap-8xs);
+}
+.frame-group {
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  /* gap: 14px; */
+  font-size: var(--font-size-lg);
+  font-family: var(--font-poppins);
+}
+.desktop-1,
+.frame-parent,
+.vector-group {
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+.vector-group {
+  width: 413px;
+  height: 370px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 84px var(--padding-25xl) 34px 145px;
+  position: relative;
+  gap: 59px;
+  flex-shrink: 0;
+  
+}
+.desktop-1,
+.frame-parent {
+  text-align: left;
+  color: var(--color-dimgray);
+}
+.frame-parent {
+  height: 1024px;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 654px 0 0;
+  gap: 11px;
+  min-width: 707px;
+  max-width: 100%;
+  font-size: 35px;
+  font-family: var(--font-roboto);
+}
+.desktop-1 {
+  width: 100%;
+  position: relative;
+  background: linear-gradient(180deg, #fbeadd, #fff);
+  overflow: hidden;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0 0 0 153px;
+  letter-spacing: normal;
+  row-gap: 20px;
+  font-size: var(--font-size-13xl);
+  font-family: var(--font-poppins);
+}
+@media screen and (max-width: 1200px) {
+  .frame-parent {
+    padding-top: 425px;
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 1050px) {
+  .inhale-the-future-container {
+    font-size: 44px;
+    line-height: 44px;
+  }
+  .control-your-body {
+    font-size: var(--font-size-5xl);
+  }
+  .platform-instagram-shape {
+    flex: 1;
+    margin-left: 0;
+  }
+  .schedule-label-parent {
+    flex-wrap: wrap;
+  }
+  .contact-me {
+    font-size: 28px;
+  }
+  .frame-parent {
+    height: auto;
+    min-width: 100%;
+  }
+  .desktop-1 {
+    flex-wrap: wrap;
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    padding-bottom: var(--padding-xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 750px) {
+  .schedule-label {
+    gap: 26px 52px;
+    min-width: 100%;
+  }
+  .spiritoasis-email-address-parent {
+    flex-wrap: wrap;
+    gap: 36px 18px;
+  }
+  .contact-label {
+    gap: 52px 105px;
+  }
+  .platform-instagram-shape {
+    min-width: 100%;
+  }
+  .frame-parent {
+    padding-top: 276px;
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 450px) {
+  .pricing {
+    font-size: var(--font-size-lg);
+  }
+  .vector-parent {
+    flex-wrap: wrap;
+  }
+  .inhale-the-future-container {
+    font-size: 33px;
+    line-height: 33px;
+  }
+  .about-instructor,
+  .control-your-body,
+  .schedule {
+    font-size: var(--font-size-lg);
+  }
+  .contact-label {
+    gap: 26px 105px;
+  }
+  .contact-me {
+    font-size: 21px;
+  }
+  .vector-group {
+    gap: 29px 59px;
+    padding: 55px var(--padding-xl) var(--padding-3xl);
+    box-sizing: border-box;
+  }
+}
