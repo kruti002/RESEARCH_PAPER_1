@@ -10,6 +10,7 @@ warnings.filterwarnings("ignore")
 data_pose = pd.read_csv(r'C:\research_paper\research paper\yoga-pose-detection-correction-main\csv_files\poses_data_pose.csv')
 print("Dataset shape:", data_pose.shape)
 features = data_pose.drop(["pose"], axis=1)
+print(features)
 target = data_pose[["pose"]]
 
 X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2)

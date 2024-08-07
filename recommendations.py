@@ -1,4 +1,6 @@
-def init():
+import pandas as pd
+
+def init_dicts():
     angles_dict = {
         "armpit_left": 0,
         "armpit_right": 1,
@@ -17,7 +19,7 @@ def error_margin(control, value):
     return control - 20 <= int(value) <= control + 20
 
 def check_joint(angles, joint_name, threshold, body_position):
-    angles_dict = init()
+    angles_dict = init_dicts()
     joint_index = angles_dict[joint_name]
     current_angle = angles[joint_index]
     if error_margin(threshold, current_angle):
@@ -28,8 +30,6 @@ def check_joint(angles, joint_name, threshold, body_position):
         return f"Bring your {joint_name.replace('_', ' ')} closer to your {body_position}. Current angle: {current_angle}° (reduce by {abs(deviation)}°)."
     else:
         return f"Move your {joint_name.replace('_', ' ')} further from your {body_position}. Current angle: {current_angle}° (increase by {abs(deviation)}°)."
-
-    return None
 
 def check_pose_angle(pose_index, angles, df):
     feedback = []

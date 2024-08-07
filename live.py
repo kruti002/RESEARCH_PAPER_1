@@ -4,11 +4,11 @@ import pickle as pk
 import mediapipe as mp
 import pandas as pd
 import multiprocessing as mtp
+import shap  # Import SHAP
 
 from recommendations import check_pose_angle
 from landmarks import extract_landmarks
 from calc_angles import rangles
-
 
 def init_cam():
     cam = cv2.VideoCapture(0)
@@ -20,7 +20,6 @@ def init_cam():
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     return cam
 
-
 def get_pose_name(index):
     names = {
         0: "downdog",
@@ -31,7 +30,6 @@ def get_pose_name(index):
         5: "vriksasana"
     }
     return str(names[index])
-
 
 def init_dicts():
     landmarks_points = {
@@ -65,7 +63,6 @@ def init_dicts():
     cols = col_names.copy()
     return cols, landmarks_points_array
 
-
 def cv2_put_text(image, message):
     cv2.putText(
         image,
@@ -78,11 +75,9 @@ def cv2_put_text(image, message):
         cv2.LINE_AA
     )
 
-
 def destroy(cam):
     cv2.destroyAllWindows()
     cam.release()
-
 
 if __name__ == "__main__":
     cam = init_cam()
@@ -92,6 +87,9 @@ if __name__ == "__main__":
     mp_drawing = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
 
+    # Initialize SHAP explainer
+    explainer = shap.TreeExplainer(model)
+    
     while True:
         result, image = cam.read()
         flipped = cv2.flip(image, 1)
@@ -122,7 +120,12 @@ if __name__ == "__main__":
                     if suggestions:
                         for suggestion in suggestions:
                             print(suggestion)
+
+                    # SHAP explanation
+                    shap_values = explainer.shap_values(df)
+                    shap.summary_plot(shap_values, df, plot_type="bar")
                 else:
                     cv2_put_text(flipped, "No Pose Detected")
                     print("No Pose Detected")
             cv2.imshow("Frame", flipped)
+
