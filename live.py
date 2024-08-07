@@ -3,7 +3,6 @@ from time import time
 import pickle as pk
 import mediapipe as mp
 import pandas as pd
-import pyttsx4
 import multiprocessing as mtp
 
 from recommendations import check_pose_angle
@@ -32,6 +31,7 @@ def get_pose_name(index):
         5: "vriksasana"
     }
     return str(names[index])
+
 
 def init_dicts():
     landmarks_points = {
@@ -66,20 +66,6 @@ def init_dicts():
     return cols, landmarks_points_array
 
 
-engine = pyttsx4.init()
-
-
-# def tts(tts_q):
-#     while True:
-#         objects = tts_q.get()
-#         if objects is None:
-#             break
-#         message = objects[0]
-#         engine.say(message)
-#         engine.runAndWait()
-#     tts_q.task_done()
-
-
 def cv2_put_text(image, message):
     cv2.putText(
         image,
@@ -92,17 +78,10 @@ def cv2_put_text(image, message):
         cv2.LINE_AA
     )
 
-def destroy(cam):
-    cv2.destroyAllwindows()
-    cam.release()
 
-# def destory(cam, tts_proc, tts_q):
-#     cv2.destroyAllWindows()
-#     cam.release()
-#     tts_q.put(None)
-#     tts_q.close()
-#     tts_q.join_thread()
-#     tts_proc.join()
+def destroy(cam):
+    cv2.destroyAllWindows()
+    cam.release()
 
 
 if __name__ == "__main__":
@@ -113,12 +92,6 @@ if __name__ == "__main__":
     mp_drawing = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
 
-    # tts_q = mtp.JoinableQueue()
-    # tts_proc = mtp.Process(target=tts, args=(tts_q, ))
-    # tts_proc.start()
-
-    # tts_last_exec = time() + 5
-
     while True:
         result, image = cam.read()
         flipped = cv2.flip(image, 1)
@@ -126,7 +99,6 @@ if __name__ == "__main__":
 
         key = cv2.waitKey(1)
         if key == ord("q"):
-            # destory(cam, tts_proc, tts_q)
             destroy(cam)
             break
 
@@ -142,15 +114,15 @@ if __name__ == "__main__":
                 if probabilities[0, prediction[0]] > 0.6:
                     pose_name = get_pose_name(prediction[0])
                     cv2_put_text(flipped, pose_name)
+                    print(f"Detected Pose: {pose_name}")
 
                     angles = rangles(df, landmarks_points_array)
                     suggestions = check_pose_angle(prediction[0], angles, angles_df)
 
-                    # if time() > tts_last_exec and suggestions:
-                    #     for suggestion in suggestions:
-                    #         # tts_q.put([suggestion])
-                    #     tts_last_exec = time() + 5
-
+                    if suggestions:
+                        for suggestion in suggestions:
+                            print(suggestion)
                 else:
                     cv2_put_text(flipped, "No Pose Detected")
+                    print("No Pose Detected")
             cv2.imshow("Frame", flipped)
