@@ -111,7 +111,6 @@ if __name__ == "__main__":
     mp_pose = mp.solutions.pose
 
     tts_q = mtp.JoinableQueue()
-
     tts_proc = mtp.Process(target=tts, args=(tts_q, ))
     tts_proc.start()
 
@@ -120,11 +119,7 @@ if __name__ == "__main__":
     while True:
         result, image = cam.read()
         flipped = cv2.flip(image, 1)
-        resized_image = cv2.resize(
-            flipped,
-            (640, 360),
-            interpolation=cv2.INTER_AREA
-        )
+        resized_image = cv2.resize(flipped, (640, 360), interpolation=cv2.INTER_AREA)
 
         key = cv2.waitKey(1)
         if key == ord("q"):
@@ -132,41 +127,26 @@ if __name__ == "__main__":
             break
 
         if result:
-            err, df, landmarks = extract_landmarks(
-                resized_image,
-                mp_pose,
-                cols
-            )
+            err, df, landmarks = extract_landmarks(resized_image, mp_pose, cols)
 
-            if err == False:
+            if not err:
                 prediction = model.predict(df)
                 probabilities = model.predict_proba(df)
 
-                mp_drawing.draw_landmarks(
-                    flipped,
-                    landmarks,
-                    mp_pose.POSE_CONNECTIONS
-                )
+                mp_drawing.draw_landmarks(flipped, landmarks, mp_pose.POSE_CONNECTIONS)
 
                 if probabilities[0, prediction[0]] > 0.6:
-                    cv2_put_text(
-                        flipped,
-                        get_pose_name(prediction[0])
-                    )
+                    pose_name = get_pose_name(prediction[0])
+                    cv2_put_text(flipped, pose_name)
 
                     angles = rangles(df, landmarks_points_array)
-                    suggestions = check_pose_angle(
-                        prediction[0], angles, angles_df)
+                    suggestions = check_pose_angle(prediction[0], angles, angles_df)
 
-                    if time() > tts_last_exec:
-                        tts_q.put([
-                            suggestions[0]
-                        ])
+                    if time() > tts_last_exec and suggestions:
+                        for suggestion in suggestions:
+                            tts_q.put([suggestion])
                         tts_last_exec = time() + 5
 
                 else:
-                    cv2_put_text(
-                        flipped,
-                        "No Pose Detected"
-                    )
+                    cv2_put_text(flipped, "No Pose Detected")
             cv2.imshow("Frame", flipped)

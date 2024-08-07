@@ -15,9 +15,7 @@ def init():
 
 
 def error_margin(control, value):
-    if int(value) in range(control - 20, control + 21):
-        return True
-    return False
+    return control - 20 <= int(value) <= control + 20
 
 
 def check_joint(angles, joint_name, threshold, body_position):
@@ -25,78 +23,28 @@ def check_joint(angles, joint_name, threshold, body_position):
     joint_index = angles_dict[joint_name]
 
     if error_margin(threshold, angles[joint_index]):
-        return None
+        return f"Good job! Your {joint_name.replace('_', ' ')} is well positioned."
 
     if angles[joint_index] > threshold:
-        return f"Bring {' '.join(joint_name.split('_')[::-1])} closer to {body_position}."
+        return f"Bring your {joint_name.replace('_', ' ')} closer to your {body_position}."
     elif angles[joint_index] < threshold:
-        return f"Put {' '.join(joint_name.split('_')[::-1])} further away from {body_position}."
+        return f"Move your {joint_name.replace('_', ' ')} further away from your {body_position}."
 
     return None
 
 
 def check_pose_angle(pose_index, angles, df):
-    result = []
+    feedback = []
 
-    result.append(check_joint(
-        angles,
-        "armpit_right",
-        int(df.loc[pose_index, "armpit_left"]),
-        "body"
-    ))
-    result.append(check_joint(
-        angles,
-        "armpit_left",
-        int(df.loc[pose_index, "armpit_right"]),
-        "body"
-    ))
-    result.append(check_joint(
-        angles,
-        "elbow_right",
-        int(df.loc[pose_index, "elbow_left"]),
-        "arm"
-    ))
-    result.append(check_joint(
-        angles,
-        "elbow_left",
-        int(df.loc[pose_index, "elbow_right"]),
-        "arm"
-    ))
-    result.append(check_joint(
-        angles,
-        "hip_right",
-        int(df.loc[pose_index, "hip_left"]),
-        "pelvis"
-    ))
-    result.append(check_joint(
-        angles,
-        "hip_left",
-        int(df.loc[pose_index, "hip_right"]),
-        "pelvis"
-    ))
-    result.append(check_joint(
-        angles,
-        "knee_right",
-        int(df.loc[pose_index, "knee_left"]),
-        "calf"
-    ))
-    result.append(check_joint(
-        angles,
-        "knee_left",
-        int(df.loc[pose_index, "knee_right"]),
-        "calf"
-    ))
-    result.append(check_joint(
-        angles,
-        "ankle_right",
-        int(df.loc[pose_index, "ankle_left"]),
-        "foot"
-    ))
-    result.append(check_joint(
-        angles,
-        "ankle_left",
-        int(df.loc[pose_index, "ankle_right"]),
-        "foot"
-    ))
+    feedback.append(check_joint(angles, "armpit_right", int(df.loc[pose_index, "armpit_left"]), "body"))
+    feedback.append(check_joint(angles, "armpit_left", int(df.loc[pose_index, "armpit_right"]), "body"))
+    feedback.append(check_joint(angles, "elbow_right", int(df.loc[pose_index, "elbow_left"]), "arm"))
+    feedback.append(check_joint(angles, "elbow_left", int(df.loc[pose_index, "elbow_right"]), "arm"))
+    feedback.append(check_joint(angles, "hip_right", int(df.loc[pose_index, "hip_left"]), "pelvis"))
+    feedback.append(check_joint(angles, "hip_left", int(df.loc[pose_index, "hip_right"]), "pelvis"))
+    feedback.append(check_joint(angles, "knee_right", int(df.loc[pose_index, "knee_left"]), "calf"))
+    feedback.append(check_joint(angles, "knee_left", int(df.loc[pose_index, "knee_right"]), "calf"))
+    feedback.append(check_joint(angles, "ankle_right", int(df.loc[pose_index, "ankle_left"]), "foot"))
+    feedback.append(check_joint(angles, "ankle_left", int(df.loc[pose_index, "ankle_right"]), "foot"))
 
-    return [message for message in result if message is not None]
+    return [message for message in feedback if message is not None]
