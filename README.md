@@ -6,4 +6,4 @@ How to run the yoga pose detection code:
 
 3.Run rfc_model.py
 
-4.Run live_detection.py
+4.Run live.py
