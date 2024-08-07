@@ -3,9 +3,13 @@ from time import time
 import pickle as pk
 import mediapipe as mp
 import pandas as pd
-from recommendations import check_pose_angle, check_camera_angle
+import pyttsx4
+import multiprocessing as mtp
+
+from recommendations import check_pose_angle
 from landmarks import extract_landmarks
 from calc_angles import rangles
+
 
 def init_cam():
     cam = cv2.VideoCapture(0)
@@ -16,6 +20,7 @@ def init_cam():
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     return cam
+
 
 def get_pose_name(index):
     names = {
@@ -60,6 +65,21 @@ def init_dicts():
     cols = col_names.copy()
     return cols, landmarks_points_array
 
+
+engine = pyttsx4.init()
+
+
+def tts(tts_q):
+    while True:
+        objects = tts_q.get()
+        if objects is None:
+            break
+        message = objects[0]
+        engine.say(message)
+        engine.runAndWait()
+    tts_q.task_done()
+
+
 def cv2_put_text(image, message):
     cv2.putText(
         image,
@@ -72,20 +92,30 @@ def cv2_put_text(image, message):
         cv2.LINE_AA
     )
 
-def destory(cam):
+
+def destory(cam, tts_proc, tts_q):
     cv2.destroyAllWindows()
     cam.release()
+    tts_q.put(None)
+    tts_q.close()
+    tts_q.join_thread()
+    tts_proc.join()
+
 
 if __name__ == "__main__":
     cam = init_cam()
-
-    model = pk.load(open(r'C:\research_paper\research paper\yoga-pose-detection-correction-main\models\poses.model', "rb"))
-
+    model = pk.load(open("./models/poses.model", "rb"))
     cols, landmarks_points_array = init_dicts()
-
-    angles_df = pd.read_csv(r'C:\research_paper\research paper\yoga-pose-detection-correction-main\csv_files\poses_angles.csv')
+    angles_df = pd.read_csv("./csv_files/poses_angles.csv")
     mp_drawing = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
+
+    tts_q = mtp.JoinableQueue()
+
+    tts_proc = mtp.Process(target=tts, args=(tts_q, ))
+    tts_proc.start()
+
+    tts_last_exec = time() + 5
 
     while True:
         result, image = cam.read()
@@ -95,37 +125,45 @@ if __name__ == "__main__":
             (640, 360),
             interpolation=cv2.INTER_AREA
         )
+
         key = cv2.waitKey(1)
         if key == ord("q"):
-            destory(cam)
+            destory(cam, tts_proc, tts_q)
             break
+
         if result:
             err, df, landmarks = extract_landmarks(
                 resized_image,
                 mp_pose,
                 cols
             )
+
             if err == False:
                 prediction = model.predict(df)
                 probabilities = model.predict_proba(df)
+
                 mp_drawing.draw_landmarks(
                     flipped,
                     landmarks,
                     mp_pose.POSE_CONNECTIONS
                 )
-                if probabilities[0, prediction[0]] > 0.85:
+
+                if probabilities[0, prediction[0]] > 0.6:
                     cv2_put_text(
                         flipped,
                         get_pose_name(prediction[0])
                     )
+
                     angles = rangles(df, landmarks_points_array)
-                    pose_suggestions = check_pose_angle(prediction[0], angles, angles_df)
-                    camera_suggestions = check_camera_angle(prediction[0], angles, angles_df)
-                    all_suggestions = pose_suggestions + camera_suggestions
-                    print(all_suggestions)
-                    for suggestion in all_suggestions:
-                        cv2_put_text(flipped, suggestion)
-                    
+                    suggestions = check_pose_angle(
+                        prediction[0], angles, angles_df)
+
+                    if time() > tts_last_exec:
+                        tts_q.put([
+                            suggestions[0]
+                        ])
+                        tts_last_exec = time() + 5
+
                 else:
                     cv2_put_text(
                         flipped,

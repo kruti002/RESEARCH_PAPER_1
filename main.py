@@ -1,3 +1,67 @@
+
+
+
+from flask import Flask, render_template, Response
+import cv2
+import mediapipe as mp
+
+app = Flask(__name__)
+
+class VideoCamera:
+    def __init__(self):
+        self.video = cv2.VideoCapture(0)
+        self.mp_face_detection = mp.solutions.face_detection
+        self.face_detection = self.mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence=0.5)
+        self.mp_drawing = mp.solutions.drawing_utils
+    
+    def __del__(self):
+        self.video.release()
+    
+    def get_frame(self):
+        while True:
+            ret, frame = self.video.read()
+            if not ret:
+                continue
+            
+            # Convert the frame to RGB
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            
+            # Perform face detection
+            results = self.face_detection.process(frame_rgb)
+            
+            # Draw face detections on the frame
+            if results.detections:
+                for detection in results.detections:
+                    self.mp_drawing.draw_detection(frame, detection)
+            
+            # Convert frame back to BGR format for OpenCV
+            frame_bgr = cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2BGR)
+            
+            # Encode the frame in JPEG format
+            ret, jpeg = cv2.imencode('.jpg', frame_bgr)
+            
+            if not ret:
+                continue
+            
+            # Yield the frame in bytes
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n\r\n')
+
+@app.route('/')
+def index():
+    return render_template('desktop-2.html')
+
+def gen(camera):
+    for frame in camera.get_frame():
+        yield frame
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(VideoCamera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+if __name__ == '__main__':
+    app.run(debug=True)
 # # from flask import Flask, render_template
 
 # # app = Flask(__name__)
@@ -214,67 +278,3 @@
 
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port='5000', debug=True)
-
-
-
-from flask import Flask, render_template, Response
-import cv2
-import mediapipe as mp
-
-app = Flask(__name__)
-
-class VideoCamera:
-    def __init__(self):
-        self.video = cv2.VideoCapture(0)
-        self.mp_face_detection = mp.solutions.face_detection
-        self.face_detection = self.mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence=0.5)
-        self.mp_drawing = mp.solutions.drawing_utils
-    
-    def __del__(self):
-        self.video.release()
-    
-    def get_frame(self):
-        while True:
-            ret, frame = self.video.read()
-            if not ret:
-                continue
-            
-            # Convert the frame to RGB
-            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            
-            # Perform face detection
-            results = self.face_detection.process(frame_rgb)
-            
-            # Draw face detections on the frame
-            if results.detections:
-                for detection in results.detections:
-                    self.mp_drawing.draw_detection(frame, detection)
-            
-            # Convert frame back to BGR format for OpenCV
-            frame_bgr = cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2BGR)
-            
-            # Encode the frame in JPEG format
-            ret, jpeg = cv2.imencode('.jpg', frame_bgr)
-            
-            if not ret:
-                continue
-            
-            # Yield the frame in bytes
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n\r\n')
-
-@app.route('/')
-def index():
-    return render_template('desktop-2.html')
-
-def gen(camera):
-    for frame in camera.get_frame():
-        yield frame
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen(VideoCamera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
-
-if __name__ == '__main__':
-    app.run(debug=True)

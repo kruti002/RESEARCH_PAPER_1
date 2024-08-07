@@ -28,9 +28,9 @@ def check_joint(angles, joint_name, threshold, body_position):
         return None
 
     if angles[joint_index] > threshold:
-        return f"Bring {' '.join(joint_name.split('_')[::-1])} closer to {body_position} by angle {joint_index-threshold}."
+        return f"Bring {' '.join(joint_name.split('_')[::-1])} closer to {body_position}."
     elif angles[joint_index] < threshold:
-        return f"Move {' '.join(joint_name.split('_')[::-1])} further away from {body_position} by angle {joint_index-threshold}."
+        return f"Put {' '.join(joint_name.split('_')[::-1])} further away from {body_position}."
 
     return None
 
@@ -100,29 +100,3 @@ def check_pose_angle(pose_index, angles, df):
     ))
 
     return [message for message in result if message is not None]
-def check_camera_angle(pose_index, angles, df):
-    result = []
-    missing_joint_count = 0
-
-    joint_names = [
-        "armpit_right", "armpit_left",
-        "elbow_right", "elbow_left",
-        "hip_right", "hip_left",
-        "knee_right", "knee_left",
-        "ankle_right", "ankle_left"
-    ]
-
-    for joint_name in joint_names:
-        threshold = int(df.loc[pose_index, joint_name.replace('_', '')])
-        message = check_joint(angles, joint_name, threshold, "body")
-        if message:
-            result.append(message)
-        else:
-            missing_joint_count += 1
-
-    missing_joint_threshold = 3
-
-    if missing_joint_count > missing_joint_threshold:
-        result = ["Some joints are not being detected properly. Please adjust your camera angle."]
-
-    return result
