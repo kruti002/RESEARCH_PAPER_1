@@ -3,9 +3,7 @@ from time import time
 import pickle as pk
 import mediapipe as mp
 import pandas as pd
-import multiprocessing as mtp
-import shap  # Import SHAP
-
+import matplotlib.pyplot as plt
 from recommendations import check_pose_angle
 from landmarks import extract_landmarks
 from calc_angles import rangles
@@ -87,9 +85,6 @@ if __name__ == "__main__":
     mp_drawing = mp.solutions.drawing_utils
     mp_pose = mp.solutions.pose
 
-    # Initialize SHAP explainer
-    explainer = shap.TreeExplainer(model)
-    
     while True:
         result, image = cam.read()
         flipped = cv2.flip(image, 1)
@@ -115,17 +110,31 @@ if __name__ == "__main__":
                     print(f"Detected Pose: {pose_name}")
 
                     angles = rangles(df, landmarks_points_array)
-                    suggestions = check_pose_angle(prediction[0], angles, angles_df)
+                    suggestions, angle_differences = check_pose_angle(prediction[0], angles, angles_df)
 
                     if suggestions:
                         for suggestion in suggestions:
                             print(suggestion)
 
-                    # SHAP explanation
-                    shap_values = explainer.shap_values(df)
-                    shap.summary_plot(shap_values, df, plot_type="bar")
+                    # Convert angle differences to percentages
+                    max_angle_difference = max(angle_differences.values(), default=1)  # Avoid division by zero
+                    percentage_differences = {joint: (angle / max_angle_difference) * 100 for joint, angle in angle_differences.items()}
+
+                    # Generate the bar chart
+                    plt.figure(figsize=(10, 5))
+                    bars = plt.bar(percentage_differences.keys(), percentage_differences.values(), color='skyblue')
+                    plt.axhline(y=0, color='black', linestyle='--')
+                    plt.xlabel("Joint")
+                    plt.ylabel("Percentage Difference (%)")
+                    plt.title("Percentage Differences for Each Joint")
+
+                    # Add text annotations to the bars
+                    for bar in bars:
+                        yval = bar.get_height()
+                        plt.text(bar.get_x() + bar.get_width()/2, yval, f"{round(yval, 2)}%", ha='center', va='bottom')
+
+                    plt.show()
                 else:
                     cv2_put_text(flipped, "No Pose Detected")
                     print("No Pose Detected")
             cv2.imshow("Frame", flipped)
-
